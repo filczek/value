@@ -1,0 +1,32 @@
+{
+  "name": "filczek/value",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Filip Czekalski",
+      "homepage": "https://github.com/filczek"
+    }
+  ],
+  "require": {
+    "php": ">=8.2",
+    "ext-mbstring": "*",
+    "ext-intl": "*",
+    "ext-bcmath": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "10.5.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "Filczek\\Value\\": "src/"
+    },
+    "exclude-from-classmap": [
+      "src/Test/"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Filczek\\Value\\Test\\": "src/Test/"
+    }
+  }
+}
