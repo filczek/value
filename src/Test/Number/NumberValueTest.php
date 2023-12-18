@@ -24,7 +24,7 @@ class NumberValueTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function transformsToNumberProvider()
+    public static function transformsToNumberProvider()
     {
         yield "transforms int to number value" => [0, "0"];
         yield "transforms float to number value" => [0.15, "0.15"];
@@ -51,7 +51,7 @@ class NumberValueTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function sumProvider()
+    public static function sumProvider()
     {
         yield [[], '0'];
         yield [[1, 2, 3.5, '15'], '21.5'];
@@ -69,7 +69,7 @@ class NumberValueTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function avgProvider()
+    public static function avgProvider()
     {
         yield [[], '0'];
         yield [[1, 2, 3, 4, 5], '3'];
@@ -88,7 +88,7 @@ class NumberValueTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function addProvider()
+    public static function addProvider()
     {
         yield 'empty' => [0, [], '0'];
         yield [0, [1, 2, 3, 4, 5], '15'];
@@ -109,7 +109,7 @@ class NumberValueTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function subtrahendProvider()
+    public static function subtrahendProvider()
     {
         yield 'empty' => [0, [], '0'];
         yield [0, [1, 2, 3, 4, 5], '-15'];
@@ -130,7 +130,7 @@ class NumberValueTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function multiplierProvider()
+    public static function multiplierProvider()
     {
         yield 'empty' => [0, [], '0'];
         yield [0, [1, 2, 3, 4, 5], '0'];
@@ -152,7 +152,7 @@ class NumberValueTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function divideProvider()
+    public static function divideProvider()
     {
         yield 'empty' => [0, [], '0'];
         yield [0, [1, 2, 3, 4, 5], '0'];
@@ -174,7 +174,7 @@ class NumberValueTest extends TestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function largerThanProvider()
+    public static function largerThanProvider()
     {
         yield '0 > 0.0' => ['0', '0.0', false];
         yield '0 > 1' => ['0', '1', false];
@@ -195,7 +195,7 @@ class NumberValueTest extends TestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function largerThanOrEqualProvider()
+    public static function largerThanOrEqualProvider()
     {
         yield '0 >= 0.0' => ['0', '0.0', true];
         yield '0 >= 1' => ['0', '1', false];
@@ -216,7 +216,7 @@ class NumberValueTest extends TestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function lessThanProvider()
+    public static function lessThanProvider()
     {
         yield '0 < 0.0' => ['0', '0.0', false];
         yield '0 < 1' => ['0', '1', true];
@@ -237,7 +237,7 @@ class NumberValueTest extends TestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function lessThanOrEqualProvider()
+    public static function lessThanOrEqualProvider()
     {
         yield '0 <= 0.0' => ['0', '0.0', true];
         yield '0 <= 1' => ['0', '1', true];
@@ -258,7 +258,7 @@ class NumberValueTest extends TestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function isPositiveProvider()
+    public static function isPositiveProvider()
     {
         yield ['0', true];
         yield [15, true];
@@ -279,7 +279,7 @@ class NumberValueTest extends TestCase
         $this->assertSame($expected, $actual);
     }
 
-    public function isZeroProvider()
+    public static function isZeroProvider()
     {
         yield ['0', true];
         yield [15, false];
@@ -300,7 +300,7 @@ class NumberValueTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function toPositiveProvider()
+    public static function toPositiveProvider()
     {
         yield ['0', '0'];
         yield ['-0', '0'];
@@ -322,7 +322,7 @@ class NumberValueTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function toNegativeProvider()
+    public static function toNegativeProvider()
     {
         yield ['0', '-0'];
         yield ['-0', '-0'];
