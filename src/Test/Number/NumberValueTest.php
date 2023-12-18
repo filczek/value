@@ -28,7 +28,14 @@ class NumberValueTest extends TestCase
     {
         yield "transforms int to number value" => [0, "0"];
         yield "transforms float to number value" => [0.15, "0.15"];
-        yield "transforms string to number value" => ["1", "1"];
+
+        yield "transforms positive integer string to number value" => ["1", "1"];
+        yield "transforms negative integer string to number value" => ["-1", "-1"];
+        yield "transforms positive incomplete decimal to number value" => ["1.", "1.0"];
+        yield "transforms negative incomplete decimal to number value" => ["-1.", "-1.0"];
+        yield "transforms positive decimal string to number value" => ["0.89653", "0.89653"];
+        yield "transforms negative decimal to number value" => ["-0.89653", "-0.89653"];
+
         yield "transforms itself to number value" => [NumberValue::fromInt(1), "1"];
     }
 

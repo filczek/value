@@ -8,6 +8,7 @@ use Filczek\Value\Number\Calculator\Calculator;
 use Filczek\Value\Number\Calculator\CalculatorInterface;
 use Filczek\Value\String\Exception\NonIterableMethodNotImplemented;
 use Filczek\Value\String\UnicodeString;
+use InvalidArgumentException;
 use Stringable;
 
 abstract class AbstractNumber implements Stringable
@@ -38,7 +39,7 @@ abstract class AbstractNumber implements Stringable
         }
 
         $type = gettype($number);
-        throw new \InvalidArgumentException("Unsupported number ($type) type.");
+        throw new InvalidArgumentException("Unsupported number ($type) type.");
     }
 
     public static function fromInt(int $number): static
@@ -54,12 +55,21 @@ abstract class AbstractNumber implements Stringable
     public static function fromString(string $number): static
     {
         $string = UnicodeString::of($number)
-            ->squish()
-            ->toString();
+            ->squish();
 
-        // TODO validate if invalid string
+        if ($string->startsWith('+')) {
+            $string = $string->replace('+', '');
+        }
 
-        return new static($string);
+        if ($string->endsWith('.')) {
+            $string = $string->finish('0');
+        }
+
+        if (false === $string->matches('/^(\-{0,1})\d+(\.\d{0,})?$/')) {
+            throw new InvalidArgumentException("Passed string is not a number!");
+        }
+
+        return new static((string)$string);
     }
 
     public static function sum(int|float|string|AbstractNumber $first = 0, int|float|string|AbstractNumber ...$numbers): static
