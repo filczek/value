@@ -91,18 +91,6 @@ class UnicodeString extends AbstractString
         return static::of($result);
     }
 
-    public function isJson(): bool
-    {
-        $depth = 512;
-
-        if (function_exists('json_validate')) {
-            return json_validate($this->string, $depth);
-        }
-
-        json_decode($this->string, true, $depth);
-        return json_last_error() === JSON_ERROR_NONE;
-    }
-
     public function contains(string|iterable|AbstractString $needles, bool $ignore_case = false): bool
     {
         if (is_iterable($needles)) {
@@ -227,7 +215,7 @@ class UnicodeString extends AbstractString
         $before = (string)$before;
         $after = (string)($after ?? $before);
 
-        $result = $before . $this->string . ($after ?? $before);
+        $result = $before . $this->string . $after;
 
         return static::of($result);
     }

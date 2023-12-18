@@ -164,7 +164,7 @@ abstract class AbstractString implements Stringable
      * @param int $index
      * @return static|false
      */
-    abstract public function charAt(int $index);
+    abstract public function charAt(int $index): static|false;
 
     /**
      * Return the remainder of a string after the first occurrence of a given value.
@@ -302,7 +302,10 @@ abstract class AbstractString implements Stringable
      *
      * @return bool
      */
-    abstract public function isJson(): bool;
+    public function isJson(): bool
+    {
+        return json_validate($this->toString());
+    }
 
     /**
      * Determine if a string contains any given substring.
