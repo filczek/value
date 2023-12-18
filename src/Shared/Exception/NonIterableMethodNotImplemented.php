@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Filczek\Value\String\Exception;
+namespace Filczek\Value\Shared\Exception;
 
 use TypeError;
 

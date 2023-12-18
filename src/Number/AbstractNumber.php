@@ -6,7 +6,7 @@ namespace Filczek\Value\Number;
 
 use Filczek\Value\Number\Calculator\Calculator;
 use Filczek\Value\Number\Calculator\CalculatorInterface;
-use Filczek\Value\String\Exception\NonIterableMethodNotImplemented;
+use Filczek\Value\Shared\Exception\NonIterableMethodNotImplemented;
 use Filczek\Value\String\UnicodeString;
 use InvalidArgumentException;
 use Stringable;

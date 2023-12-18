@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Filczek\Value\String;
 
 use Closure;
-use Filczek\Value\String\Exception\NonIterableMethodNotImplemented;
+use Filczek\Value\Shared\Exception\NonIterableMethodNotImplemented;
 use Stringable;
 
 abstract class AbstractString implements Stringable
