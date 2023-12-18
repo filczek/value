@@ -9,68 +9,52 @@ use Override;
 class NumberValue extends AbstractNumber
 {
     #[Override]
-    public function add(string|int|AbstractNumber|float ...$addends): static
+    public function add(int|float|string|iterable|AbstractNumber $addends): static
     {
-        if (empty($addends)) {
-            return static::of($this);
+        if (is_iterable($addends)) {
+            return parent::add($addends);
         }
 
-        if (count($addends) > 1) {
-            return parent::add(...$addends);
-        }
-
-        $addend = static::of($addends[0]);
+        $addend = static::of($addends);
         $result = $this->calculator()->add($this->toString(), $addend->toString());
 
         return static::of($result);
     }
 
     #[Override]
-    public function subtract(string|int|AbstractNumber|float ...$subtrahends): static
+    public function subtract(int|float|string|iterable|AbstractNumber $subtrahends): static
     {
-        if (empty($subtrahends)) {
-            return static::of($this);
+        if (is_iterable($subtrahends)) {
+            return parent::subtract($subtrahends);
         }
 
-        if (count($subtrahends) > 1) {
-            return parent::subtract(...$subtrahends);
-        }
-
-        $subtrahend = static::of($subtrahends[0]);
+        $subtrahend = static::of($subtrahends);
         $result = $this->calculator()->subtract($this->toString(), $subtrahend->toString());
 
         return static::of($result);
     }
 
     #[Override]
-    public function multiply(string|int|AbstractNumber|float ...$multipliers): static
+    public function multiply(int|float|string|iterable|AbstractNumber $multipliers): static
     {
-        if (empty($multipliers)) {
-            return static::of($this);
+        if (is_iterable($multipliers)) {
+            return parent::multiply($multipliers);
         }
 
-        if (count($multipliers) > 1) {
-            return parent::multiply(...$multipliers);
-        }
-
-        $multiplier = static::of($multipliers[0]);
+        $multiplier = static::of($multipliers);
         $result = $this->calculator()->multiply($this->toString(), $multiplier->toString());
 
         return static::of($result);
     }
 
     #[Override]
-    public function divide(string|int|AbstractNumber|float ...$divisors): static
+    public function divide(int|float|string|iterable|AbstractNumber $divisors): static
     {
-        if (empty($divisors)) {
-            return static::of($this);
+        if (is_iterable($divisors)) {
+            return parent::divide($divisors);
         }
 
-        if (count($divisors) > 1) {
-            return parent::divide(...$divisors);
-        }
-
-        $divisor = static::of($divisors[0]);
+        $divisor = static::of($divisors);
         $result = $this->calculator()->divide($this->toString(), $divisor->toString());
 
         return static::of($result);

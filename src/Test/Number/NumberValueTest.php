@@ -75,7 +75,7 @@ class NumberValueTest extends TestCase
         $number = NumberValue::of($number);
 
         // Act
-        $actual = $number->add(...$addends);
+        $actual = $number->add($addends);
 
         // Assert
         $this->assertEquals($expected, $actual);
@@ -96,7 +96,7 @@ class NumberValueTest extends TestCase
         $number = NumberValue::of($number);
 
         // Act
-        $actual = $number->subtract(...$subtrahends);
+        $actual = $number->subtract($subtrahends);
 
         // Assert
         $this->assertEquals($expected, $actual);
@@ -117,7 +117,7 @@ class NumberValueTest extends TestCase
         $number = NumberValue::of($number);
 
         // Act
-        $actual = $number->multiply(...$multipliers);
+        $actual = $number->multiply($multipliers);
 
         // Assert
         $this->assertEquals($expected, $actual);
@@ -139,7 +139,7 @@ class NumberValueTest extends TestCase
         $number = NumberValue::of($number);
 
         // Act
-        $actual = $number->divide(...$divisors);
+        $actual = $number->divide($divisors);
 
         // Assert
         $this->assertEquals($expected, $actual);

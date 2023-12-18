@@ -65,13 +65,13 @@ abstract class AbstractNumber implements Stringable
     public static function sum(int|float|string|AbstractNumber $first = 0, int|float|string|AbstractNumber ...$numbers): static
     {
         return static::of($first)
-            ->add(...$numbers);
+            ->add($numbers);
     }
 
     public static function avg(int|float|string|AbstractNumber $first = 0, int|float|string|AbstractNumber ...$numbers): static
     {
         return static::of($first)
-            ->add(...$numbers)
+            ->add($numbers)
             ->divide(count($numbers) + 1);
     }
 
@@ -81,10 +81,10 @@ abstract class AbstractNumber implements Stringable
     }
 
     /**
-     * @param int|float|string|static ...$addends
+     * @param int|float|string|iterable|static $addends
      * @return static
      */
-    public function add(int|float|string|AbstractNumber ...$addends): static
+    public function add(int|float|string|iterable|AbstractNumber $addends): static
     {
         if (false === is_iterable($addends)) {
             throw NonIterableMethodNotImplemented::of(__FUNCTION__, static::class);
@@ -99,10 +99,10 @@ abstract class AbstractNumber implements Stringable
     }
 
     /**
-     * @param int|float|string|static ...$subtrahends
+     * @param int|float|string|iterable|static $subtrahends
      * @return static
      */
-    public function subtract(int|float|string|AbstractNumber ...$subtrahends): static
+    public function subtract(int|float|string|iterable|AbstractNumber $subtrahends): static
     {
         if (false === is_iterable($subtrahends)) {
             throw NonIterableMethodNotImplemented::of(__FUNCTION__, static::class);
@@ -117,10 +117,10 @@ abstract class AbstractNumber implements Stringable
     }
 
     /**
-     * @param int|float|string|static ...$multipliers
+     * @param int|float|string|iterable|static $multipliers
      * @return static
      */
-    public function multiply(int|float|string|AbstractNumber ...$multipliers): static
+    public function multiply(int|float|string|iterable|AbstractNumber $multipliers): static
     {
         if (false === is_iterable($multipliers)) {
             throw NonIterableMethodNotImplemented::of(__FUNCTION__, static::class);
@@ -135,10 +135,10 @@ abstract class AbstractNumber implements Stringable
     }
 
     /**
-     * @param int|float|string|static ...$divisors
+     * @param int|float|string|iterable|static $divisors
      * @return static
      */
-    public function divide(int|float|string|AbstractNumber ...$divisors): static
+    public function divide(int|float|string|iterable|AbstractNumber $divisors): static
     {
         if (false === is_iterable($divisors)) {
             throw NonIterableMethodNotImplemented::of(__FUNCTION__, static::class);
