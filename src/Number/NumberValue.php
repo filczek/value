@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace Filczek\Value\Number;
 
+use Override;
+
 class NumberValue extends AbstractNumber
 {
+    #[Override]
     public function add(string|int|AbstractNumber|float ...$addends): static
     {
         if (empty($addends)) {
@@ -22,6 +25,7 @@ class NumberValue extends AbstractNumber
         return static::of($result);
     }
 
+    #[Override]
     public function subtract(string|int|AbstractNumber|float ...$subtrahends): static
     {
         if (empty($subtrahends)) {
@@ -38,6 +42,7 @@ class NumberValue extends AbstractNumber
         return static::of($result);
     }
 
+    #[Override]
     public function multiply(string|int|AbstractNumber|float ...$multipliers): static
     {
         if (empty($multipliers)) {
@@ -54,6 +59,7 @@ class NumberValue extends AbstractNumber
         return static::of($result);
     }
 
+    #[Override]
     public function divide(string|int|AbstractNumber|float ...$divisors): static
     {
         if (empty($divisors)) {
@@ -70,6 +76,7 @@ class NumberValue extends AbstractNumber
         return static::of($result);
     }
 
+    #[Override]
     public function equals(float|int|string|AbstractNumber $number): bool
     {
         $number = static::of($number);
@@ -77,6 +84,7 @@ class NumberValue extends AbstractNumber
         return 0 === $this->calculator()->compare($this->number, $number->number);
     }
 
+    #[Override]
     public function largerThan(float|int|string|AbstractNumber $number): bool
     {
         $number = static::of($number);
@@ -86,6 +94,7 @@ class NumberValue extends AbstractNumber
         return $result > 0;
     }
 
+    #[Override]
     public function largerThanOrEqual(float|int|string|AbstractNumber $number)
     {
         $number = static::of($number);
@@ -95,6 +104,7 @@ class NumberValue extends AbstractNumber
         return $result >= 0;
     }
 
+    #[Override]
     public function lessThan(float|int|string|AbstractNumber $number): bool
     {
         $number = static::of($number);
@@ -104,6 +114,7 @@ class NumberValue extends AbstractNumber
         return $result < 0;
     }
 
+    #[Override]
     public function lessThanOrEqual(float|int|string|AbstractNumber $number): bool
     {
         $number = static::of($number);

@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace Filczek\Value\String;
 
 use Closure;
+use Override;
 use Transliterator;
 
 class UnicodeString extends AbstractString
 {
+    #[Override]
     public function equals(string|iterable|AbstractString $string): bool
     {
         if (is_iterable($string)) {
@@ -18,6 +20,7 @@ class UnicodeString extends AbstractString
         return $this->string === (string)$string;
     }
 
+    #[Override]
     public function trim(): static
     {
         $string = $this->string;
@@ -26,6 +29,7 @@ class UnicodeString extends AbstractString
         return static::of($result);
     }
 
+    #[Override]
     public function trimStart(): static
     {
         $string = $this->string;
@@ -34,6 +38,7 @@ class UnicodeString extends AbstractString
         return static::of($result);
     }
 
+    #[Override]
     public function trimEnd(): static
     {
         $string = $this->string;
@@ -42,6 +47,7 @@ class UnicodeString extends AbstractString
         return static::of($result);
     }
 
+    #[Override]
     public function charAt(int $index): static|false
     {
         $length = $this->length();
@@ -53,6 +59,7 @@ class UnicodeString extends AbstractString
         return $this->substr($index, 1);
     }
 
+    #[Override]
     public function substr(int $start, ?int $length = null, string $encoding = 'UTF-8'): static
     {
         $result = mb_substr($this->string, $start, $length, $encoding);
@@ -60,16 +67,19 @@ class UnicodeString extends AbstractString
         return static::of($result);
     }
 
+    #[Override]
     public function indexOf(string|AbstractString $needle, int $offset = 0, ?string $encoding = null): int|false
     {
         return mb_strpos($this->string, (string)$needle, $offset, $encoding);
     }
 
+    #[Override]
     public function indexOfLast(string|AbstractString $needle, int $offset = 0, ?string $encoding = null): int|false
     {
         return mb_strrpos($this->string, (string)$needle, $offset, $encoding);
     }
 
+    #[Override]
     public function reverse(): static
     {
         $chars = mb_str_split($this->string, 1);
@@ -78,11 +88,13 @@ class UnicodeString extends AbstractString
         return static::of($result);
     }
 
+    #[Override]
     public function length(): int
     {
         return mb_strlen($this->string);
     }
 
+    #[Override]
     public function toAscii(): static
     {
         $transliterator = Transliterator::createFromRules(':: Any-Latin; :: Latin-ASCII; :: NFD; :: [:Nonspacing Mark:] Remove; :: NFC;', Transliterator::FORWARD);
@@ -91,6 +103,7 @@ class UnicodeString extends AbstractString
         return static::of($result);
     }
 
+    #[Override]
     public function contains(string|iterable|AbstractString $needles, bool $ignore_case = false): bool
     {
         if (is_iterable($needles)) {
@@ -116,6 +129,7 @@ class UnicodeString extends AbstractString
         return false;
     }
 
+    #[Override]
     public function match(string $pattern): static
     {
         preg_match($pattern, $this->string, $matches);
@@ -127,11 +141,13 @@ class UnicodeString extends AbstractString
         return static::of($matches[1] ?? $matches[0]);
     }
 
+    #[Override]
     public function matches(string $pattern): bool
     {
         return 1 === preg_match($pattern, $this->string);
     }
 
+    #[Override]
     public function replace(string|iterable|AbstractString $search, string|iterable|AbstractString $replace): static
     {
         if (is_iterable($search)) {
@@ -151,6 +167,7 @@ class UnicodeString extends AbstractString
         return static::of($result);
     }
 
+    #[Override]
     public function replaceAll(string|iterable|AbstractString $search, string|iterable|AbstractString $replace, bool $ignore_case = false): static
     {
         $result = $ignore_case
@@ -160,6 +177,7 @@ class UnicodeString extends AbstractString
         return static::of($result);
     }
 
+    #[Override]
     public function replaceMatches(string $pattern, string|Closure|AbstractString $replace, int $limit = -1): static
     {
         if ($replace instanceof Closure) {
@@ -171,6 +189,7 @@ class UnicodeString extends AbstractString
         return static::of($result);
     }
 
+    #[Override]
     public function start(string|AbstractString $prefix): static
     {
         $quoted = preg_quote((string)$prefix, '/');
@@ -180,6 +199,7 @@ class UnicodeString extends AbstractString
         return static::of($result);
     }
 
+    #[Override]
     public function upper(): static
     {
         $result = mb_strtoupper($this->string, 'UTF-8');
@@ -187,6 +207,7 @@ class UnicodeString extends AbstractString
         return static::of($result);
     }
 
+    #[Override]
     public function title(): static
     {
         $result = mb_convert_case($this->string, MB_CASE_TITLE, 'UTF-8');
@@ -194,6 +215,7 @@ class UnicodeString extends AbstractString
         return static::of($result);
     }
 
+    #[Override]
     public function lower(): static
     {
         $result = mb_strtolower($this->string, 'UTF-8');
@@ -201,6 +223,7 @@ class UnicodeString extends AbstractString
         return static::of($result);
     }
 
+    #[Override]
     public function finish(string|AbstractString $suffix): static
     {
         $quoted = preg_quote((string)$suffix, '/');
@@ -210,6 +233,7 @@ class UnicodeString extends AbstractString
         return static::of($result);
     }
 
+    #[Override]
     public function wrap(string|AbstractString $before, string|AbstractString|null $after = null): static
     {
         $before = (string)$before;
@@ -220,6 +244,7 @@ class UnicodeString extends AbstractString
         return static::of($result);
     }
 
+    #[Override]
     public function startsWith(string|iterable|AbstractString $needles, bool $ignore_case = false): bool
     {
         if (is_iterable($needles)) {
@@ -244,6 +269,7 @@ class UnicodeString extends AbstractString
         return false;
     }
 
+    #[Override]
     public function endsWith(string|iterable|AbstractString $needles, bool $ignore_case = false): bool
     {
         if (is_iterable($needles)) {

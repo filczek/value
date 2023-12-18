@@ -6,6 +6,7 @@ namespace Filczek\Value\Array;
 
 use Filczek\Value\Array\Exception\ValueIsNotArray;
 use InvalidArgumentException;
+use Override;
 use Stringable;
 
 /**
@@ -15,6 +16,7 @@ use Stringable;
  */
 class ListArrayValue extends ArrayValue
 {
+    #[Override]
     public static function of($value): static
     {
         if ($value instanceof Stringable) {
