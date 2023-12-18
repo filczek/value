@@ -168,7 +168,12 @@ abstract class AbstractNumber implements Stringable
      * @param int|float|string|static $number
      * @return bool
      */
-    abstract public function equals(int|float|string|AbstractNumber $number): bool;
+    public function equals(int|float|string|AbstractNumber $number): bool
+    {
+        $number = static::of($number);
+
+        return 0 === $this->calculator()->compare($this->toString(), $number->toString());
+    }
 
     /**
      * Determine if number is not equal to given number.
@@ -187,7 +192,14 @@ abstract class AbstractNumber implements Stringable
      * @param int|float|string|static $number
      * @return bool
      */
-    abstract public function largerThan(int|float|string|AbstractNumber $number): bool;
+    public function largerThan(int|float|string|AbstractNumber $number): bool
+    {
+        $number = static::of($number);
+
+        $result = $this->calculator()->compare($this->toString(), $number->toString());
+
+        return $result > 0;
+    }
 
     /**
      * Determine if number is larger than or equal to given number.
@@ -195,7 +207,14 @@ abstract class AbstractNumber implements Stringable
      * @param int|float|string|static $number
      * @return bool
      */
-    abstract public function largerThanOrEqual(int|float|string|AbstractNumber $number);
+    public function largerThanOrEqual(int|float|string|AbstractNumber $number)
+    {
+        $number = static::of($number);
+
+        $result = $this->calculator()->compare($this->toString(), $number->toString());
+
+        return $result >= 0;
+    }
 
     /**
      * Determine if number is less than given number.
@@ -203,7 +222,14 @@ abstract class AbstractNumber implements Stringable
      * @param int|float|string|static $number
      * @return bool
      */
-    abstract public function lessThan(int|float|string|AbstractNumber $number): bool;
+    public function lessThan(int|float|string|AbstractNumber $number): bool
+    {
+        $number = static::of($number);
+
+        $result = $this->calculator()->compare($this->toString(), $number->toString());
+
+        return $result < 0;
+    }
 
     /**
      * Determine if number is less than or equal to given number.
@@ -211,7 +237,14 @@ abstract class AbstractNumber implements Stringable
      * @param int|float|string|AbstractNumber $number
      * @return bool
      */
-    abstract public function lessThanOrEqual(int|float|string|AbstractNumber $number): bool;
+    public function lessThanOrEqual(int|float|string|AbstractNumber $number): bool
+    {
+        $number = static::of($number);
+
+        $result = $this->calculator()->compare($this->toString(), $number->toString());
+
+        return $result <= 0;
+    }
 
     /**
      * Determine if number is larger than zero.
