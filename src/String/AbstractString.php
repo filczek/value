@@ -10,9 +10,9 @@ use Stringable;
 
 abstract class AbstractString implements Stringable
 {
-    protected $string;
+    protected string $string;
 
-    protected function __construct(string $string) {
+    final private function __construct(string $string) {
         $this->string = $string;
     }
 
@@ -21,7 +21,7 @@ abstract class AbstractString implements Stringable
         return static::of('');
     }
 
-    public static function of($string): static
+    public static function of(mixed $string): static
     {
         return new static((string)$string);
     }
@@ -245,14 +245,14 @@ abstract class AbstractString implements Stringable
     /**
      * Get reversed string.
      *
-     * @return $this
+     * @return static
      */
     abstract public function reverse(): static;
 
     /**
      * Get a string length.
      *
-     * @return number
+     * @return int
      */
     abstract public function length(): int;
 
@@ -368,7 +368,7 @@ abstract class AbstractString implements Stringable
      *
      * @param string|iterable|static $search
      * @param string|iterable|static $replace
-     * @return $this
+     * @return static
      */
     public function replace(string|iterable|AbstractString $search, string|iterable|AbstractString $replace): static
     {
@@ -421,7 +421,7 @@ abstract class AbstractString implements Stringable
      * Remove substring matching given regular expression.
      *
      * @param string $pattern
-     * @return $this
+     * @return static
      */
     public function removeMatches(string $pattern): static
     {

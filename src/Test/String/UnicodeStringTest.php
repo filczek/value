@@ -6,13 +6,14 @@ namespace Filczek\Value\Test\String;
 
 use Filczek\Value\String\AbstractString;
 use Filczek\Value\String\UnicodeString;
+use Generator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class UnicodeStringTest extends TestCase
 {
     #[DataProvider('transformsToStringProvider')]
-    public function testTransformsToString(mixed $value, string $expected)
+    public function testTransformsToString(mixed $value, string $expected): void
     {
         // Arrange
 
@@ -24,7 +25,7 @@ class UnicodeStringTest extends TestCase
         $this->assertSame($expected, $actual->toString());
     }
 
-    public static function transformsToStringProvider()
+    public static function transformsToStringProvider(): Generator
     {
         yield "transforms itself to string" => [UnicodeString::of('test'), 'test'];
         yield "transforms int to string" => [6512, "6512"];
@@ -32,13 +33,13 @@ class UnicodeStringTest extends TestCase
         yield "transforms null to empty string" => [null, ''];
     }
 
-    public function testIsImmutable()
+    public function testIsImmutable(): void
     {
         // Arrange
         $a = UnicodeString::of("world");
 
         // Act
-        $b = (clone $a)->start("hello ")->finish("!");
+        $b = $a->start("hello ")->finish("!");
 
         // Assert
         $this->assertEquals("world", $a);
@@ -46,7 +47,7 @@ class UnicodeStringTest extends TestCase
     }
 
     #[DataProvider('notEqualsProvider')]
-    public function testNotEquals(string|AbstractString $string, string|iterable|AbstractString $other, bool $expected)
+    public function testNotEquals(string|AbstractString $string, string|iterable|AbstractString $other, bool $expected): void
     {
         // Arrange
         $string = UnicodeString::of($string);
@@ -58,7 +59,7 @@ class UnicodeStringTest extends TestCase
         $this->assertSame($expected, $actual);
     }
 
-    public static function notEqualsProvider()
+    public static function notEqualsProvider(): Generator
     {
         yield 'equals to native string' => ['abc', 'abc', false];
         yield 'equals to any string in array' => ['abc', ['abc'], false];
@@ -70,7 +71,7 @@ class UnicodeStringTest extends TestCase
     }
 
     #[DataProvider('squishProvider')]
-    public function testSquish(string|AbstractString $string, string|AbstractString $expected)
+    public function testSquish(string|AbstractString $string, string|AbstractString $expected): void
     {
         // Arrange
         $string = UnicodeString::of($string);
@@ -82,14 +83,14 @@ class UnicodeStringTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public static function squishProvider()
+    public static function squishProvider(): Generator
     {
         yield ['', ''];
         yield ['    Zażółć   gęślą         jaźń    ', UnicodeString::of('Zażółć gęślą jaźń')];
     }
 
     #[DataProvider('trimProvider')]
-    public function testTrim(string|AbstractString $string, string|AbstractString $expected)
+    public function testTrim(string|AbstractString $string, string|AbstractString $expected): void
     {
         // Arrange
         $string = UnicodeString::of($string);
@@ -101,14 +102,14 @@ class UnicodeStringTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public static function trimProvider()
+    public static function trimProvider(): Generator
     {
         yield ['', ''];
         yield [' Zażółć gęślą jaźń      ', UnicodeString::of('Zażółć gęślą jaźń')];
     }
 
     #[DataProvider('trimStartProvider')]
-    public function testtrimStart(string|AbstractString $string, string|AbstractString $expected)
+    public function testtrimStart(string|AbstractString $string, string|AbstractString $expected): void
     {
         // Arrange
         $string = UnicodeString::of($string);
@@ -120,14 +121,14 @@ class UnicodeStringTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public static function trimStartProvider()
+    public static function trimStartProvider(): Generator
     {
         yield ['', ''];
         yield ['      Zażółć gęślą jaźń      ', UnicodeString::of('Zażółć gęślą jaźń      ')];
     }
 
     #[DataProvider('trimEndProvider')]
-    public function testtrimEnd(string|AbstractString $string, string|AbstractString $expected)
+    public function testtrimEnd(string|AbstractString $string, string|AbstractString $expected): void
     {
         // Arrange
         $string = UnicodeString::of($string);
@@ -139,14 +140,14 @@ class UnicodeStringTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public static function trimEndProvider()
+    public static function trimEndProvider(): Generator
     {
         yield ['', ''];
         yield ['      Zażółć gęślą jaźń      ', UnicodeString::of('      Zażółć gęślą jaźń')];
     }
 
     #[DataProvider('beforeProvider')]
-    public function testBefore(string|AbstractString $string, string|AbstractString $needle, string|AbstractString $expected)
+    public function testBefore(string|AbstractString $string, string|AbstractString $needle, string|AbstractString $expected): void
     {
         // Arrange
         $string = UnicodeString::of($string);
@@ -158,7 +159,7 @@ class UnicodeStringTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public static function beforeProvider()
+    public static function beforeProvider(): Generator
     {
         yield "expects itself it needle is empty" => ['Zażółć gęślą jaźń', '', 'Zażółć gęślą jaźń'];
         yield "expects itself if needle not found" => ['Zażółć gęślą jaźń', 'test', 'Zażółć gęślą jaźń'];
@@ -166,7 +167,7 @@ class UnicodeStringTest extends TestCase
     }
 
     #[DataProvider('beforeLastProvider')]
-    public function testBeforeLast(string|AbstractString $string, string|AbstractString $needle, string|AbstractString $expected)
+    public function testBeforeLast(string|AbstractString $string, string|AbstractString $needle, string|AbstractString $expected): void
     {
         // Arrange
         $string = UnicodeString::of($string);
@@ -178,7 +179,7 @@ class UnicodeStringTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public static function beforeLastProvider()
+    public static function beforeLastProvider(): Generator
     {
         yield "expects itself if needle is empty" => ['Zażółć gęślą jaźń', '', 'Zażółć gęślą jaźń'];
         yield "expects itself if needle not found" => ['Zażółć gęślą jaźń', 'test', 'Zażółć gęślą jaźń'];
@@ -186,7 +187,7 @@ class UnicodeStringTest extends TestCase
     }
 
     #[DataProvider('betweenProvider')]
-    public function testBetween(string|AbstractString $string, string|AbstractString $from, string|AbstractString $to, string|AbstractString $expected)
+    public function testBetween(string|AbstractString $string, string|AbstractString $from, string|AbstractString $to, string|AbstractString $expected): void
     {
         // Arrange
         $string = UnicodeString::of($string);
@@ -198,14 +199,14 @@ class UnicodeStringTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public static function betweenProvider()
+    public static function betweenProvider(): Generator
     {
         yield "expects itself if any needle is empty" => ['Zażółć gęślą jaźń', '', '', 'Zażółć gęślą jaźń'];
         yield "expects ' gęślą ' between 'Zażółć' and 'jaźń' in 'Zażółć gęślą jaźń" => ['Zażółć gęślą jaźń', 'Zażółć', UnicodeString::of('jaźń'), ' gęślą '];
     }
 
     #[DataProvider('charAtProvider')]
-    public function testCharAt(string|AbstractString $string, int $index, string|AbstractString|false $expected)
+    public function testCharAt(string|AbstractString $string, int $index, string|AbstractString|false $expected): void
     {
         // Arrange
         $string = UnicodeString::of($string);
@@ -217,7 +218,7 @@ class UnicodeStringTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public static function charAtProvider()
+    public static function charAtProvider(): Generator
     {
         yield "expect false as not found" => ['Zażółć gęślą jaźń', 18, false];
         yield "expect 'ń' at last index" => ['Zażółć gęślą jaźń', -1, 'ń'];
@@ -226,7 +227,7 @@ class UnicodeStringTest extends TestCase
     }
 
     #[DataProvider('afterProvider')]
-    public function testAfter(string|AbstractString $string, string|AbstractString $needle, string|AbstractString $expected)
+    public function testAfter(string|AbstractString $string, string|AbstractString $needle, string|AbstractString $expected): void
     {
         // Arrange
         $string = UnicodeString::of($string);
@@ -238,7 +239,7 @@ class UnicodeStringTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public static function afterProvider()
+    public static function afterProvider(): Generator
     {
         yield "expects itself it needle is empty" => ['Zażółć gęślą jaźń', '', 'Zażółć gęślą jaźń'];
         yield "expects itself if needle not found" => ['Zażółć gęślą jaźń', 'test', 'Zażółć gęślą jaźń'];
@@ -246,7 +247,7 @@ class UnicodeStringTest extends TestCase
     }
 
     #[DataProvider('afterLastProvider')]
-    public function testAfterLast(string|AbstractString $string, string|AbstractString $needle, string|AbstractString $expected)
+    public function testAfterLast(string|AbstractString $string, string|AbstractString $needle, string|AbstractString $expected): void
     {
         // Arrange
         $string = UnicodeString::of($string);
@@ -258,7 +259,7 @@ class UnicodeStringTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public static function afterLastProvider()
+    public static function afterLastProvider(): Generator
     {
         yield "expects itself if needle is empty" => ['Zażółć gęślą jaźń', '', 'Zażółć gęślą jaźń'];
         yield "expects itself if needle not found" => ['Zażółć gęślą jaźń', 'test', 'Zażółć gęślą jaźń'];
@@ -266,7 +267,7 @@ class UnicodeStringTest extends TestCase
     }
 
     #[DataProvider('indexOfProvider')]
-    public function testIndexOf(string|AbstractString $string, string|AbstractString $needle, int|false $expected)
+    public function testIndexOf(string|AbstractString $string, string|AbstractString $needle, int|false $expected): void
     {
         // Arrange
         $string = UnicodeString::of($string);
@@ -278,14 +279,14 @@ class UnicodeStringTest extends TestCase
         $this->assertSame($expected, $actual);
     }
 
-    public static function indexOfProvider()
+    public static function indexOfProvider(): Generator
     {
         yield "expects 'x' to be false" => ['Zażółć gęślą jaźń', 'x', false];
         yield "expects 'ż' to be 2nd" => ['Zażółć gęślą jaźń', 'ż', 2];
     }
 
     #[DataProvider('indexOfLastProvider')]
-    public function testIndexOfLast(string|AbstractString $string, string|AbstractString $needle, int|false $expected)
+    public function testIndexOfLast(string|AbstractString $string, string|AbstractString $needle, int|false $expected): void
     {
         // Arrange
         $string = UnicodeString::of($string);
@@ -297,14 +298,14 @@ class UnicodeStringTest extends TestCase
         $this->assertSame($expected, $actual);
     }
 
-    public static function indexOfLastProvider()
+    public static function indexOfLastProvider(): Generator
     {
         yield "expects 'x' to be false" => ['Zażółć gęślą jaźń', 'x', false];
         yield "expects 'ź' to be 15" => ['Zażółć gęślą jaźń', 'ź', 15];
     }
 
     #[DataProvider('reverseProvider')]
-    public function testReverse(string|AbstractString $string, string|AbstractString $expected)
+    public function testReverse(string|AbstractString $string, string|AbstractString $expected): void
     {
         // Arrange
         $string = UnicodeString::of($string);
@@ -316,14 +317,14 @@ class UnicodeStringTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public static function reverseProvider()
+    public static function reverseProvider(): Generator
     {
         yield ['test', 'tset'];
         yield ['jaźń', 'ńźaj'];
     }
 
     #[DataProvider('lengthProvider')]
-    public function testLength(string|AbstractString $string, int $expected)
+    public function testLength(string|AbstractString $string, int $expected): void
     {
         // Arrange
         $string = UnicodeString::of($string);
@@ -335,14 +336,14 @@ class UnicodeStringTest extends TestCase
         $this->assertSame($expected, $actual);
     }
 
-    public static function lengthProvider()
+    public static function lengthProvider(): Generator
     {
         yield "expects 'AaBb' to be 4 characters" => ['AaBb', 4];
         yield "expects 'Zażółć gęślą jaźń' to be 17 characters" => ['Zażółć gęślą jaźń', 17];
     }
 
     #[DataProvider('notEmptyProvider')]
-    public function testNotEmpty(string|AbstractString $string, bool $expected)
+    public function testNotEmpty(string|AbstractString $string, bool $expected): void
     {
         // Arrange
         $string = UnicodeString::of($string);
@@ -354,14 +355,14 @@ class UnicodeStringTest extends TestCase
         $this->assertSame($expected, $actual);
     }
 
-    public static function notEmptyProvider()
+    public static function notEmptyProvider(): Generator
     {
         yield "expects 'AaBb' to not be empty" => ['AaBb', true];
         yield "expects '' to be empty" => ['', false];
     }
 
     #[DataProvider('isAsciiProvider')]
-    public function testIsAscii(string|AbstractString $string, bool $expected)
+    public function testIsAscii(string|AbstractString $string, bool $expected): void
     {
         // Arrange
         $string = UnicodeString::of($string);
@@ -373,7 +374,7 @@ class UnicodeStringTest extends TestCase
         $this->assertSame($expected, $actual);
     }
 
-    public static function isAsciiProvider()
+    public static function isAsciiProvider(): Generator
     {
         yield "'' is ASCII (7-bit)" => ['', true];
         yield "'The quick brown fox jumps over the lazy dog' is ASCII (7-bit)" => ['The quick brown fox jumps over the lazy dog', true];
@@ -383,7 +384,7 @@ class UnicodeStringTest extends TestCase
     }
 
     #[DataProvider('toAsciiProvider')]
-    public function testToAscii(string|AbstractString $string, string|AbstractString $expected)
+    public function testToAscii(string|AbstractString $string, string|AbstractString $expected): void
     {
         // Arrange
         $string = UnicodeString::of($string);
@@ -396,7 +397,7 @@ class UnicodeStringTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public static function toAsciiProvider()
+    public static function toAsciiProvider(): Generator
     {
         yield "'The quick brown fox jumps over the lazy dog' is the same" => ['The quick brown fox jumps over the lazy dog', 'The quick brown fox jumps over the lazy dog'];
         yield "'Zażółć gęślą jaźń' to 'Zazolc gesla jazn'" => ['Zażółć gęślą jaźń', 'Zazolc gesla jazn'];
@@ -404,7 +405,7 @@ class UnicodeStringTest extends TestCase
     }
 
     #[DataProvider('isJsonProvider')]
-    public function testIsJson(string|AbstractString $string, bool $expected)
+    public function testIsJson(string|AbstractString $string, bool $expected): void
     {
         // Arrange
         $string = UnicodeString::of($string);
@@ -416,7 +417,7 @@ class UnicodeStringTest extends TestCase
         $this->assertSame($expected, $actual);
     }
 
-    public static function isJsonProvider()
+    public static function isJsonProvider(): Generator
     {
         yield ['', false];
         yield ['[]', true];
@@ -426,7 +427,7 @@ class UnicodeStringTest extends TestCase
     }
 
     #[DataProvider('containsProvider')]
-    public function testContains(string|AbstractString $string, string|iterable|AbstractString $needles, bool $ignore_case, bool $expected)
+    public function testContains(string|AbstractString $string, string|iterable|AbstractString $needles, bool $ignore_case, bool $expected): void
     {
         // Arrange
         $string = UnicodeString::of($string);
@@ -438,7 +439,7 @@ class UnicodeStringTest extends TestCase
         $this->assertSame($expected, $actual);
     }
 
-    public static function containsProvider()
+    public static function containsProvider(): Generator
     {
         yield "empty string is false" => ['Zażółć gęślą jaźń', [''], false, false];
 
@@ -453,7 +454,7 @@ class UnicodeStringTest extends TestCase
     }
 
     #[DataProvider('containsAllProvider')]
-    public function testContainsAll(string|AbstractString $string, iterable $needles, bool $ignore_case, bool $expected)
+    public function testContainsAll(string|AbstractString $string, iterable $needles, bool $ignore_case, bool $expected): void
     {
         // Arrange
         $string = UnicodeString::of($string);
@@ -465,7 +466,7 @@ class UnicodeStringTest extends TestCase
         $this->assertSame($expected, $actual);
     }
 
-    public static function containsAllProvider()
+    public static function containsAllProvider(): Generator
     {
         yield "contains 'Zażółć' in 'Zażółć gęślą jaźń' (case sensitive)" => ['Zażółć gęślą jaźń', ['Zażółć'], false, true];
 
@@ -477,7 +478,7 @@ class UnicodeStringTest extends TestCase
     }
 
     #[DataProvider('matchProvider')]
-    public function testMatch(string|AbstractString $string, string $pattern, string|AbstractString $expected)
+    public function testMatch(string|AbstractString $string, string $pattern, string|AbstractString $expected): void
     {
         // Arrange
         $string = UnicodeString::of($string);
@@ -489,14 +490,14 @@ class UnicodeStringTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public static function matchProvider()
+    public static function matchProvider(): Generator
     {
         yield "expects to return empty string if match was not found" => ['test', '/\d+/', ''];
         yield "expects to return first match of any number in '21test 6854 test'" => ['21test 6854 test', '/\d+/', '21'];
     }
 
     #[DataProvider('replaceProvider')]
-    public function testReplace(string|AbstractString $string, string|iterable|AbstractString $search, string|iterable|AbstractString $replace, string|AbstractString $expected)
+    public function testReplace(string|AbstractString $string, string|iterable|AbstractString $search, string|iterable|AbstractString $replace, string|AbstractString $expected): void
     {
         // Arrange
         $string = UnicodeString::of($string);
@@ -508,7 +509,7 @@ class UnicodeStringTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public static function replaceProvider()
+    public static function replaceProvider(): Generator
     {
         yield "reutrns itself nothing was replaced" => ['21test', 'hello', 'world', '21test'];
         yield "replaces first occurrence of 'test' with ' years'" => ['21test test', 'test', ' years', '21 years test'];
@@ -516,7 +517,7 @@ class UnicodeStringTest extends TestCase
     }
 
     #[DataProvider('replaceAllProvider')]
-    public function testReplaceAll(string|AbstractString $string, string|iterable|AbstractString $search, string|iterable|AbstractString $replace, string|AbstractString $expected)
+    public function testReplaceAll(string|AbstractString $string, string|iterable|AbstractString $search, string|iterable|AbstractString $replace, string|AbstractString $expected): void
     {
         // Arrange
         $string = UnicodeString::of($string);
@@ -528,14 +529,14 @@ class UnicodeStringTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public static function replaceAllProvider()
+    public static function replaceAllProvider(): Generator
     {
         yield "replaces every occurrence of 'test' with ' years'" => ['21test test', 'test', ' years', '21 years  years'];
         yield "replaces '%0' with 'Hello' and '%1' with 'world!'" => ['%0 %1', ['%0', '%1'], ['Hello', 'world!'], 'Hello world!'];
     }
 
     #[DataProvider('removeProvider')]
-    public function testRemove(string|AbstractString $string, string|iterable|AbstractString $needles, bool $ignore_case, string|AbstractString $expected)
+    public function testRemove(string|AbstractString $string, string|iterable|AbstractString $needles, bool $ignore_case, string|AbstractString $expected): void
     {
         // Arrange
         $string = UnicodeString::of($string);
@@ -547,7 +548,7 @@ class UnicodeStringTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public static function removeProvider()
+    public static function removeProvider(): Generator
     {
         yield ['The quick brown fox jumps over the lazy dog', ['fox', 'over'], false, 'The quick brown  jumps  the lazy dog'];
         yield ['Zażółć gęślą jaźń', 'gęślą', false, 'Zażółć  jaźń'];
@@ -556,7 +557,7 @@ class UnicodeStringTest extends TestCase
     }
 
     #[DataProvider('removeMatchesProvider')]
-    public function testRemoveMatches(string|AbstractString $string, string $pattern, string|AbstractString $expected)
+    public function testRemoveMatches(string|AbstractString $string, string $pattern, string|AbstractString $expected): void
     {
         // Arrange
         $string = UnicodeString::of($string);
@@ -568,13 +569,13 @@ class UnicodeStringTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public static function removeMatchesProvider()
+    public static function removeMatchesProvider(): Generator
     {
         yield "removes every number in a string" => ['21test21', '/\d+/', 'test'];
     }
 
     #[DataProvider('upperProvider')]
-    public function testUpper(string|AbstractString $string, string|AbstractString $expected)
+    public function testUpper(string|AbstractString $string, string|AbstractString $expected): void
     {
         // Arrange
         $string = UnicodeString::of($string);
@@ -586,14 +587,14 @@ class UnicodeStringTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public static function upperProvider()
+    public static function upperProvider(): Generator
     {
         yield ['The quick brown fox jumps over the lazy dog', 'THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG'];
         yield ['Zażółć gęślą jaźń', 'ZAŻÓŁĆ GĘŚLĄ JAŹŃ'];
     }
 
     #[DataProvider('titleProvider')]
-    public function testTitle(string|AbstractString $string, string|AbstractString $expected)
+    public function testTitle(string|AbstractString $string, string|AbstractString $expected): void
     {
         // Arrange
         $string = UnicodeString::of($string);
@@ -605,14 +606,14 @@ class UnicodeStringTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public static function titleProvider()
+    public static function titleProvider(): Generator
     {
         yield ['the', 'The'];
         yield ['żażółć', 'Żażółć'];
     }
 
     #[DataProvider('lowerProvider')]
-    public function testLower(string|AbstractString $string, string|AbstractString $expected)
+    public function testLower(string|AbstractString $string, string|AbstractString $expected): void
     {
         // Arrange
         $string = UnicodeString::of($string);
@@ -624,14 +625,14 @@ class UnicodeStringTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public static function lowerProvider()
+    public static function lowerProvider(): Generator
     {
         yield ['THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG', 'the quick brown fox jumps over the lazy dog'];
         yield ['ZAŻÓŁĆ GĘŚLĄ JAŹŃ', 'zażółć gęślą jaźń'];
     }
 
     #[DataProvider('wrapProvider')]
-    public function testWrap(string|AbstractString $string, string|iterable|AbstractString $before, string|iterable|AbstractString|null $after, string|AbstractString $expected)
+    public function testWrap(string|AbstractString $string, string|iterable|AbstractString $before, string|iterable|AbstractString|null $after, string|AbstractString $expected): void
     {
         // Arrange
         $string = UnicodeString::of($string);
@@ -643,14 +644,14 @@ class UnicodeStringTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public static function wrapProvider()
+    public static function wrapProvider(): Generator
     {
         yield "wraps '/w' to '/\/w/i'" => ['/w', '/\\', '/i', '/\/w/i'];
         yield "wraps 'Hello world!' in quotes" => ['Hello world!', '"', null, '"Hello world!"'];
     }
 
     #[DataProvider('startsWithProvider')]
-    public function testStartsWith(string|AbstractString $string, string|iterable|AbstractString $needles, bool $ignore_case, bool $expected)
+    public function testStartsWith(string|AbstractString $string, string|iterable|AbstractString $needles, bool $ignore_case, bool $expected): void
     {
         // Arrange
         $string = UnicodeString::of($string);
@@ -662,7 +663,7 @@ class UnicodeStringTest extends TestCase
         $this->assertSame($expected, $actual);
     }
 
-    public static function startsWithProvider()
+    public static function startsWithProvider(): Generator
     {
         yield 'expects empty needle to be false' => ['year 21', '', false, false];
 
@@ -675,7 +676,7 @@ class UnicodeStringTest extends TestCase
     }
 
     #[DataProvider('startsWithNumberProvider')]
-    public function testStartsWithNumber(string|AbstractString $string, bool $expected)
+    public function testStartsWithNumber(string|AbstractString $string, bool $expected): void
     {
         // Arrange
         $string = UnicodeString::of($string);
@@ -687,7 +688,7 @@ class UnicodeStringTest extends TestCase
         $this->assertSame($expected, $actual);
     }
 
-    public static function startsWithNumberProvider()
+    public static function startsWithNumberProvider(): Generator
     {
         yield ['21 years', true];
         yield [' 21 years', false];
@@ -696,7 +697,7 @@ class UnicodeStringTest extends TestCase
     }
 
     #[DataProvider('endsWithProvider')]
-    public function testEndsWIth(string|AbstractString $string, string|iterable|AbstractString $needles, bool $ignore_case, bool $expected)
+    public function testEndsWIth(string|AbstractString $string, string|iterable|AbstractString $needles, bool $ignore_case, bool $expected): void
     {
         // Arrange
         $string = UnicodeString::of($string);
@@ -708,7 +709,7 @@ class UnicodeStringTest extends TestCase
         $this->assertSame($expected, $actual);
     }
 
-    public static function endsWithProvider()
+    public static function endsWithProvider(): Generator
     {
         yield 'expects empty needle to be false' => ['year 21', '', false, false];
 
@@ -721,7 +722,7 @@ class UnicodeStringTest extends TestCase
     }
 
     #[DataProvider('endsWithNumberProvider')]
-    public function testEndsWithNumber(string|AbstractString $string, bool $expected)
+    public function testEndsWithNumber(string|AbstractString $string, bool $expected): void
     {
         // Arrange
         $string = UnicodeString::of($string);
@@ -733,7 +734,7 @@ class UnicodeStringTest extends TestCase
         $this->assertSame($expected, $actual);
     }
 
-    public static function endsWithNumberProvider()
+    public static function endsWithNumberProvider(): Generator
     {
         yield ['21 years', false];
         yield [' 21 years', false];
